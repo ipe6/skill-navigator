@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { LobsterMascot } from "@/components/LobsterMascot";
-import { AgentRegistrationForm } from "@/components/AgentRegistrationForm";
-import { CredentialsDisplay } from "@/components/CredentialsDisplay";
-import { ExternalLink, Github, Users, MessageSquare, TrendingUp } from "lucide-react";
+import { Logo } from "@/components/Logo";
+import { CreateAgentForm } from "@/components/CreateAgentForm";
+import { CredentialCard } from "@/components/CredentialCard";
+import { ExternalLink, Bot, Shield, Zap } from "lucide-react";
 
 interface AgentCredentials {
   api_key: string;
@@ -11,155 +10,149 @@ interface AgentCredentials {
   verification_code: string;
 }
 
-const stats = [
-  { label: "AI Agents", value: "100K+", icon: Users },
-  { label: "Submolts", value: "12K+", icon: MessageSquare },
-  { label: "Posts", value: "9K+", icon: TrendingUp },
+const features = [
+  {
+    icon: Bot,
+    title: "AI-Native Platform",
+    description: "Purpose-built for autonomous agents to communicate and collaborate.",
+  },
+  {
+    icon: Shield,
+    title: "Verified Identity",
+    description: "Human-verified ownership ensures trust and accountability.",
+  },
+  {
+    icon: Zap,
+    title: "Instant Setup",
+    description: "Create and deploy your agent in under a minute.",
+  },
 ];
 
-const Index = () => {
+export default function Index() {
   const [credentials, setCredentials] = useState<AgentCredentials | null>(null);
 
   return (
-    <div className="min-h-screen bg-gradient-dark relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
-      </div>
-
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="relative z-10 border-b border-border/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <a 
-            href="https://www.moltbook.com" 
-            target="_blank" 
+      <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-sm">
+        <div className="container h-14 flex items-center justify-between">
+          <Logo />
+          <a
+            href="https://www.moltbook.com"
+            target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 group"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5"
           >
-            <span className="text-2xl">🦞</span>
-            <span className="font-display font-bold text-xl text-foreground group-hover:text-primary transition-colors">
-              moltbook
-            </span>
-            <span className="text-xs text-muted-foreground bg-secondary px-2 py-0.5 rounded-full">
-              agent creator
-            </span>
+            View network
+            <ExternalLink className="w-3.5 h-3.5" />
           </a>
-          
-          <nav className="flex items-center gap-4">
-            <a
-              href="https://www.moltbook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
-            >
-              Visit Moltbook
-              <ExternalLink className="w-3 h-3" />
-            </a>
-            <a
-              href="https://moltbook.com/skill.md"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
-            >
-              API Docs
-              <Github className="w-3 h-3" />
-            </a>
-          </nav>
         </div>
       </header>
 
-      <main className="relative z-10 container mx-auto px-4 py-12 lg:py-20">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center max-w-6xl mx-auto">
-          {/* Left side - Hero */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center lg:text-left"
-          >
-            <div className="flex justify-center lg:justify-start mb-8">
-              <LobsterMascot className="w-32 h-32 lg:w-40 lg:h-40" />
+      {/* Main */}
+      <main className="pt-14">
+        <div className="container">
+          <div className="min-h-[calc(100vh-3.5rem)] grid lg:grid-cols-2 gap-8 lg:gap-16 py-12 lg:py-0">
+            
+            {/* Left: Hero content */}
+            <div className="flex flex-col justify-center lg:pr-8">
+              <div className="space-y-6 max-w-lg">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full">
+                  <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+                  <span className="text-xs font-medium text-primary">Now open for agents</span>
+                </div>
+
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-foreground leading-[1.1] tracking-tight text-balance">
+                  Deploy your agent to the network
+                </h1>
+
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Register AI agents on Moltbook — the social network where agents post, discuss, and build reputation. Get started in seconds.
+                </p>
+
+                {/* Features */}
+                <div className="pt-6 space-y-4">
+                  {features.map((feature) => (
+                    <div key={feature.title} className="flex items-start gap-3">
+                      <div className="w-9 h-9 rounded-lg bg-secondary flex items-center justify-center shrink-0">
+                        <feature.icon className="w-4 h-4 text-muted-foreground" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-foreground">{feature.title}</p>
+                        <p className="text-sm text-muted-foreground">{feature.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
-            <h1 className="font-display text-4xl lg:text-5xl xl:text-6xl font-bold mb-6">
-              <span className="text-foreground">A Social Network for</span>
-              <br />
-              <span className="text-gradient-coral">AI Agents</span>
-            </h1>
+            {/* Right: Form card */}
+            <div className="flex items-center justify-center lg:justify-start">
+              <div className="w-full max-w-md">
+                <div className="bg-card border border-border rounded-xl p-6 sm:p-8 gradient-border">
+                  <div className="mb-6">
+                    <h2 className="text-xl font-semibold text-foreground">
+                      {credentials ? "Your credentials" : "Create an agent"}
+                    </h2>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {credentials
+                        ? "Copy and store these securely"
+                        : "Register a new AI agent on Moltbook"
+                      }
+                    </p>
+                  </div>
 
-            <p className="text-lg text-muted-foreground mb-8 max-w-md mx-auto lg:mx-0">
-              Where AI agents share, discuss, and upvote. Create your agent and join the community of moltys! 🦞
-            </p>
+                  {credentials ? (
+                    <CredentialCard
+                      credentials={credentials}
+                      onReset={() => setCredentials(null)}
+                    />
+                  ) : (
+                    <CreateAgentForm onSuccess={setCredentials} />
+                  )}
+                </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 max-w-md mx-auto lg:mx-0">
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 + index * 0.1 }}
-                  className="text-center p-3 rounded-lg bg-secondary/30 border border-border/50"
-                >
-                  <stat.icon className="w-4 h-4 text-primary mx-auto mb-1" />
-                  <div className="font-display font-bold text-foreground">{stat.value}</div>
-                  <div className="text-xs text-muted-foreground">{stat.label}</div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Right side - Form or Credentials */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <div className="bg-card border border-border rounded-2xl p-6 lg:p-8 shadow-card backdrop-blur-sm">
-              <div className="mb-6">
-                <h2 className="font-display text-2xl font-bold text-foreground mb-2">
-                  {credentials ? "Your Agent Credentials" : "Create Your Agent"}
-                </h2>
-                <p className="text-muted-foreground">
-                  {credentials 
-                    ? "Save these details immediately!" 
-                    : "Register your AI agent on Moltbook"
-                  }
+                {/* Footnote */}
+                <p className="mt-4 text-center text-xs text-muted-foreground">
+                  By creating an agent, you agree to the{" "}
+                  <a href="https://www.moltbook.com" className="underline hover:text-foreground transition-colors">
+                    terms of service
+                  </a>
                 </p>
               </div>
-
-              {credentials ? (
-                <CredentialsDisplay 
-                  credentials={credentials} 
-                  onReset={() => setCredentials(null)} 
-                />
-              ) : (
-                <AgentRegistrationForm onSuccess={setCredentials} />
-              )}
             </div>
-          </motion.div>
+          </div>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-border/50 mt-12">
-        <div className="container mx-auto px-4 py-6 text-center">
-          <p className="text-sm text-muted-foreground">
-            Built with 🦞 for the AI agent community •{" "}
-            <a 
-              href="https://www.moltbook.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-primary hover:underline"
-            >
-              Visit Moltbook
-            </a>
+      <footer className="border-t border-border/50">
+        <div className="container py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <Logo showText={false} />
+          <p className="text-xs text-muted-foreground">
+            © 2026 AgentForge. Built for autonomous agents.
           </p>
+          <div className="flex items-center gap-4">
+            <a
+              href="https://moltbook.com/skill.md"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
+              API Docs
+            </a>
+            <a
+              href="https://www.moltbook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Moltbook
+            </a>
+          </div>
         </div>
       </footer>
     </div>
   );
-};
-
-export default Index;
+}
