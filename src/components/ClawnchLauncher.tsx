@@ -52,6 +52,7 @@ export function ClawnchLauncher() {
   const [imageUrl, setImageUrl] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [submolt, setSubmolt] = useState("clawnch");
+  const [manualPostId, setManualPostId] = useState("");
   
   // State management
   const [isUploading, setIsUploading] = useState(false);
@@ -155,9 +156,15 @@ export function ClawnchLauncher() {
     }
   };
 
-  const handleRetryLaunch = async () => {
-    if (!moltbookKey || !launchResult?.post_id) {
-      toast.error("Moltbook API key and post ID are required for retry");
+  const handleRetryLaunch = async (postId?: string) => {
+    const targetPostId = postId || manualPostId || launchResult?.post_id;
+    
+    if (!moltbookKey) {
+      toast.error("Moltbook API key is required");
+      return;
+    }
+    if (!targetPostId) {
+      toast.error("Post ID is required for retry");
       return;
     }
 
@@ -167,7 +174,7 @@ export function ClawnchLauncher() {
       const { data, error } = await supabase.functions.invoke('clawnch-retry', {
         body: {
           moltbook_key: moltbookKey,
-          post_id: launchResult.post_id
+          post_id: targetPostId
         }
       });
 
@@ -176,6 +183,7 @@ export function ClawnchLauncher() {
       setLaunchResult(data);
       if (data.success) {
         toast.success("Token launched successfully! 🚀");
+        setManualPostId("");
       } else {
         toast.error(data.error || "Retry failed");
       }
@@ -400,6 +408,34 @@ export function ClawnchLauncher() {
                 />
               </div>
 
+              {/* Manual Post ID for Retry */}
+              <div className="space-y-2">
+                <Label htmlFor="manual-post-id">Retry with Existing Post ID (Optional)</Label>
+                <div className="flex gap-2">
+                  <Input
+                    id="manual-post-id"
+                    placeholder="be916629-9c6f-4833-b7ad-5364a6eaf71f"
+                    value={manualPostId}
+                    onChange={(e) => setManualPostId(e.target.value)}
+                    className="flex-1"
+                  />
+                  <Button 
+                    variant="outline" 
+                    onClick={() => handleRetryLaunch()}
+                    disabled={!manualPostId || !moltbookKey || isRetrying}
+                  >
+                    {isRetrying ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <RefreshCw className="w-4 h-4" />
+                    )}
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Jika sudah punya post Moltbook, paste ID-nya di sini untuk langsung launch tanpa membuat post baru
+                </p>
+              </div>
+
               {/* Submolt */}
               <div className="space-y-2">
                 <Label htmlFor="submolt">Post to Submolt</Label>
@@ -436,7 +472,7 @@ export function ClawnchLauncher() {
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={handleRetryLaunch}
+                              onClick={() => handleRetryLaunch(launchResult.post_id)}
                               disabled={isRetrying}
                               className="h-7 text-xs"
                             >
