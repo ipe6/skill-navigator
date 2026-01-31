@@ -146,8 +146,10 @@ export function ClawnchLauncher() {
         toast.error(data.error || "Launch failed");
       }
     } catch (error: any) {
-      toast.error(error.message || "Failed to launch token");
-      setLaunchResult({ success: false, error: error.message });
+      const errorMessage = error.message || "Failed to launch token";
+      console.error("Launch error:", error);
+      toast.error(errorMessage);
+      setLaunchResult({ success: false, error: errorMessage });
     } finally {
       setIsLaunching(false);
     }
