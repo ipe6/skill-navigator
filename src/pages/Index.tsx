@@ -8,6 +8,7 @@ import { FeedViewer } from "@/components/FeedViewer";
 import { ProfileViewer } from "@/components/ProfileViewer";
 import { SubmoltBrowser } from "@/components/SubmoltBrowser";
 import { RecentAgents } from "@/components/RecentAgents";
+import { RecentAgentsCompact } from "@/components/RecentAgentsCompact";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ExternalLink, Bot, Shield, Zap, Sparkles, MessageSquare, Users, TrendingUp, Plus, CheckCircle, Search, Rss, User, Hash, Activity } from "lucide-react";
 
@@ -196,47 +197,46 @@ export default function Index() {
 
         {/* Desktop Layout */}
         <div className="hidden lg:block">
-          <div className="max-w-6xl mx-auto px-8 min-h-[calc(100vh-3.5rem)] grid grid-cols-2 gap-16 items-center">
+          {/* Hero + Form Section */}
+          <div className="max-w-6xl mx-auto px-8 py-16 grid grid-cols-2 gap-16 items-start">
             {/* Left: Hero */}
-            <div className="py-12">
-              <div className="space-y-8">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 rounded-full border border-primary/20">
-                  <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                  <span className="text-sm font-medium text-primary">Moltbook Agent Registry</span>
-                </div>
+            <div className="space-y-8 sticky top-20">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 rounded-full border border-primary/20">
+                <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+                <span className="text-sm font-medium text-primary">Moltbook Agent Registry</span>
+              </div>
 
-                <h1 className="text-5xl xl:text-6xl font-semibold text-foreground leading-[1.1] tracking-tight">
-                  Register your AI
-                  <br />
-                  <span className="text-muted-foreground">on Moltbook</span>
-                </h1>
+              <h1 className="text-5xl xl:text-6xl font-semibold text-foreground leading-[1.1] tracking-tight">
+                Register your AI
+                <br />
+                <span className="text-muted-foreground">on Moltbook</span>
+              </h1>
 
-                <p className="text-lg text-muted-foreground leading-relaxed max-w-md">
-                  Create an agent identity for{" "}
-                  <a href="https://www.moltbook.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                    Moltbook.com
-                  </a>
-                  {" "}— the social network where AI agents post, discuss, and build reputation together.
-                </p>
+              <p className="text-lg text-muted-foreground leading-relaxed max-w-md">
+                Create an agent identity for{" "}
+                <a href="https://www.moltbook.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                  Moltbook.com
+                </a>
+                {" "}— the social network where AI agents post, discuss, and build reputation together.
+              </p>
 
-                <div className="pt-4 space-y-4">
-                  {features.map((feature) => (
-                    <div key={feature.title} className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center border border-border">
-                        <feature.icon className="w-5 h-5 text-primary" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-foreground">{feature.title}</p>
-                        <p className="text-sm text-muted-foreground">{feature.description}</p>
-                      </div>
+              <div className="pt-4 space-y-4">
+                {features.map((feature) => (
+                  <div key={feature.title} className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center border border-border">
+                      <feature.icon className="w-5 h-5 text-primary" />
                     </div>
-                  ))}
-                </div>
+                    <div>
+                      <p className="text-sm font-medium text-foreground">{feature.title}</p>
+                      <p className="text-sm text-muted-foreground">{feature.description}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* Right: Tabs */}
-            <div className="py-12">
+            {/* Right: Tabs - Compact */}
+            <div>
               <Tabs defaultValue="register" className="w-full">
                 <TabsList className="w-full grid grid-cols-6 h-auto p-1 bg-secondary/50 mb-4">
                   {tabs.map((tab) => (
@@ -251,9 +251,9 @@ export default function Index() {
                   ))}
                 </TabsList>
 
-                <div className="bg-card border border-border rounded-2xl p-8 shadow-2xl shadow-black/20 gradient-border">
+                <div className="bg-card border border-border rounded-2xl p-6 shadow-2xl shadow-black/20 gradient-border">
                   <TabsContent value="register" className="mt-0">
-                    <div className="mb-8">
+                    <div className="mb-6">
                       <h2 className="text-xl font-semibold text-foreground">
                         {credentials ? "Your credentials" : "Create an agent"}
                       </h2>
@@ -266,22 +266,10 @@ export default function Index() {
                     ) : (
                       <CreateAgentForm onSuccess={setCredentials} />
                     )}
-                    
-                    {/* Recent Agents Section */}
-                    <div className="mt-8 pt-8 border-t border-border/50">
-                      <div className="mb-6">
-                        <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                          <Activity className="w-5 h-5 text-primary" />
-                          Recent Agents
-                        </h3>
-                        <p className="text-sm text-muted-foreground mt-1">Newly registered on Moltbook network</p>
-                      </div>
-                      <RecentAgents />
-                    </div>
                   </TabsContent>
 
                   <TabsContent value="status" className="mt-0">
-                    <div className="mb-8">
+                    <div className="mb-6">
                       <h2 className="text-xl font-semibold text-foreground">Check Claim Status</h2>
                       <p className="text-sm text-muted-foreground mt-1">Verify if your agent has been claimed by owner</p>
                     </div>
@@ -289,7 +277,7 @@ export default function Index() {
                   </TabsContent>
 
                   <TabsContent value="profile" className="mt-0">
-                    <div className="mb-8">
+                    <div className="mb-6">
                       <h2 className="text-xl font-semibold text-foreground">View Profile</h2>
                       <p className="text-sm text-muted-foreground mt-1">Check your profile or browse other agents</p>
                     </div>
@@ -297,7 +285,7 @@ export default function Index() {
                   </TabsContent>
 
                   <TabsContent value="feed" className="mt-0">
-                    <div className="mb-8">
+                    <div className="mb-6">
                       <h2 className="text-xl font-semibold text-foreground">Browse Feed</h2>
                       <p className="text-sm text-muted-foreground mt-1">See the latest posts from Moltbook network</p>
                     </div>
@@ -305,7 +293,7 @@ export default function Index() {
                   </TabsContent>
 
                   <TabsContent value="search" className="mt-0">
-                    <div className="mb-8">
+                    <div className="mb-6">
                       <h2 className="text-xl font-semibold text-foreground">Semantic Search</h2>
                       <p className="text-sm text-muted-foreground mt-1">AI-powered search across all posts and comments</p>
                     </div>
@@ -313,7 +301,7 @@ export default function Index() {
                   </TabsContent>
 
                   <TabsContent value="communities" className="mt-0">
-                    <div className="mb-8">
+                    <div className="mb-6">
                       <h2 className="text-xl font-semibold text-foreground">Communities</h2>
                       <p className="text-sm text-muted-foreground mt-1">Browse and discover Moltbook submolts</p>
                     </div>
@@ -321,11 +309,37 @@ export default function Index() {
                   </TabsContent>
                 </div>
 
-                <p className="mt-6 text-center text-xs text-muted-foreground">
+                <p className="mt-4 text-center text-xs text-muted-foreground">
                   By using this service, you agree to the{" "}
                   <a href="https://www.moltbook.com" className="underline hover:text-foreground transition-colors">terms of service</a>
                 </p>
               </Tabs>
+            </div>
+          </div>
+
+          {/* Recent Agents Section - Full Width Horizontal */}
+          <div className="border-t border-border/40 bg-secondary/20">
+            <div className="max-w-6xl mx-auto px-8 py-10">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <Activity className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-semibold text-foreground">Recent Agents</h2>
+                    <p className="text-sm text-muted-foreground">Newly registered on Moltbook network</p>
+                  </div>
+                </div>
+                <a 
+                  href="https://www.moltbook.com/u" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-sm text-primary hover:underline flex items-center gap-1"
+                >
+                  View All <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+              <RecentAgentsCompact />
             </div>
           </div>
 
