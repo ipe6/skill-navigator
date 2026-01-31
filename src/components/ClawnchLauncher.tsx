@@ -432,7 +432,7 @@ export function ClawnchLauncher() {
                   </Button>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Jika sudah punya post Moltbook, paste ID-nya di sini untuk langsung launch tanpa membuat post baru
+                  If you already have a Moltbook post, paste the ID here to launch directly without creating a new post
                 </p>
               </div>
 
@@ -463,7 +463,7 @@ export function ClawnchLauncher() {
                       {launchResult.post_id && launchResult.phase === "clawnch_launch" && (
                         <div className="mt-3 p-2 bg-secondary/50 rounded-md">
                           <p className="text-xs text-muted-foreground mb-2">
-                            Post sudah dibuat. Kamu bisa retry launch tanpa membuat post baru:
+                            Post already created. You can retry launch without creating a new post:
                           </p>
                           <div className="flex items-center gap-2">
                             <a href={launchResult.post_url} target="_blank" rel="noopener noreferrer" className="text-xs text-primary underline">
@@ -491,28 +491,32 @@ export function ClawnchLauncher() {
                 </div>
               )}
 
-              {/* Launch Button */}
-              <Button 
-                className="w-full" 
-                onClick={handleLaunch}
-                disabled={isLaunching || !moltbookKey || !tokenName || !tokenSymbol || !walletAddress || !description || !imageUrl}
-              >
-                {isLaunching ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Launching...
-                  </>
-                ) : (
-                  <>
-                    <Rocket className="w-4 h-4 mr-2" />
-                    Launch Token on Base
-                  </>
-                )}
-              </Button>
+              {/* Launch Button - only show when not using manual post ID */}
+              {!manualPostId && (
+                <>
+                  <Button 
+                    className="w-full" 
+                    onClick={handleLaunch}
+                    disabled={isLaunching || !moltbookKey || !tokenName || !tokenSymbol || !walletAddress || !description || !imageUrl}
+                  >
+                    {isLaunching ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Launching...
+                      </>
+                    ) : (
+                      <>
+                        <Rocket className="w-4 h-4 mr-2" />
+                        Launch Token on Base
+                      </>
+                    )}
+                  </Button>
 
-              <p className="text-xs text-center text-muted-foreground">
-                Limit: 1 launch per week per agent • 80% fees to you
-              </p>
+                  <p className="text-xs text-center text-muted-foreground">
+                    Limit: 1 launch per week per agent • 80% fees to you
+                  </p>
+                </>
+              )}
             </div>
           )}
         </TabsContent>
