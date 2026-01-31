@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
-import { Loader2, Rocket, Upload, Coins, ExternalLink, AlertCircle, CheckCircle2, Image as ImageIcon } from "lucide-react";
+import { Loader2, Rocket, Upload, Coins, ExternalLink, AlertCircle, CheckCircle2, Image as ImageIcon, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 
 interface LaunchResult {
@@ -26,6 +26,7 @@ interface LaunchResult {
   };
   error?: string;
   errors?: string[];
+  phase?: string;
 }
 
 interface LaunchedToken {
@@ -55,6 +56,7 @@ export function ClawnchLauncher() {
   // State management
   const [isUploading, setIsUploading] = useState(false);
   const [isLaunching, setIsLaunching] = useState(false);
+  const [isRetrying, setIsRetrying] = useState(false);
   const [launchResult, setLaunchResult] = useState<LaunchResult | null>(null);
   
   // Tokens list state
@@ -148,6 +150,37 @@ export function ClawnchLauncher() {
       setLaunchResult({ success: false, error: error.message });
     } finally {
       setIsLaunching(false);
+    }
+  };
+
+  const handleRetryLaunch = async () => {
+    if (!moltbookKey || !launchResult?.post_id) {
+      toast.error("Moltbook API key and post ID are required for retry");
+      return;
+    }
+
+    setIsRetrying(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('clawnch-retry', {
+        body: {
+          moltbook_key: moltbookKey,
+          post_id: launchResult.post_id
+        }
+      });
+
+      if (error) throw error;
+      
+      setLaunchResult(data);
+      if (data.success) {
+        toast.success("Token launched successfully! 🚀");
+      } else {
+        toast.error(data.error || "Retry failed");
+      }
+    } catch (error: any) {
+      toast.error(error.message || "Failed to retry launch");
+    } finally {
+      setIsRetrying(false);
     }
   };
 
@@ -379,16 +412,42 @@ export function ClawnchLauncher() {
                 </p>
               </div>
 
-              {/* Error Display */}
+              {/* Error Display with Retry */}
               {launchResult?.error && (
                 <div className="p-3 bg-destructive/10 border border-destructive/30 rounded-lg">
                   <div className="flex items-start gap-2">
                     <AlertCircle className="w-4 h-4 text-destructive mt-0.5" />
-                    <div>
+                    <div className="flex-1">
                       <p className="text-sm text-destructive font-medium">{launchResult.error}</p>
                       {launchResult.errors?.map((err, i) => (
                         <p key={i} className="text-xs text-destructive/80 mt-1">• {err}</p>
                       ))}
+                      {launchResult.post_id && launchResult.phase === "clawnch_launch" && (
+                        <div className="mt-3 p-2 bg-secondary/50 rounded-md">
+                          <p className="text-xs text-muted-foreground mb-2">
+                            Post sudah dibuat. Kamu bisa retry launch tanpa membuat post baru:
+                          </p>
+                          <div className="flex items-center gap-2">
+                            <a href={launchResult.post_url} target="_blank" rel="noopener noreferrer" className="text-xs text-primary underline">
+                              {launchResult.post_id.slice(0, 8)}...
+                            </a>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={handleRetryLaunch}
+                              disabled={isRetrying}
+                              className="h-7 text-xs"
+                            >
+                              {isRetrying ? (
+                                <Loader2 className="w-3 h-3 animate-spin mr-1" />
+                              ) : (
+                                <RefreshCw className="w-3 h-3 mr-1" />
+                              )}
+                              Retry Launch
+                            </Button>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
