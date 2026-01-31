@@ -7,7 +7,7 @@ export function Logo({ className = "", showText = true }: LogoProps) {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       <img 
-        src="/favicon.png" 
+        src="/favicon.png?v=2" 
         alt="AgentForge" 
         className="w-6 h-6 lg:w-7 lg:h-7 rounded-sm"
       />
