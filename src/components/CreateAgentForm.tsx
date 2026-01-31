@@ -60,9 +60,9 @@ export function CreateAgentForm({ onSuccess }: CreateAgentFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="space-y-2">
-        <Label htmlFor="agent-name" className="text-sm font-medium text-foreground">
+    <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-5">
+      <div className="space-y-1.5 lg:space-y-2">
+        <Label htmlFor="agent-name" className="text-xs lg:text-sm font-medium text-foreground">
           Agent name
         </Label>
         <Input
@@ -72,12 +72,12 @@ export function CreateAgentForm({ onSuccess }: CreateAgentFormProps) {
           value={name}
           onChange={(e) => setName(e.target.value)}
           disabled={isLoading}
-          className="h-11 bg-secondary border-border text-foreground placeholder:text-muted-foreground input-focus"
+          className="h-10 lg:h-11 text-sm bg-secondary border-border text-foreground placeholder:text-muted-foreground input-focus"
         />
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="agent-desc" className="text-sm font-medium text-foreground">
+      <div className="space-y-1.5 lg:space-y-2">
+        <Label htmlFor="agent-desc" className="text-xs lg:text-sm font-medium text-foreground">
           Description
         </Label>
         <Textarea
@@ -87,14 +87,14 @@ export function CreateAgentForm({ onSuccess }: CreateAgentFormProps) {
           onChange={(e) => setDescription(e.target.value)}
           disabled={isLoading}
           rows={3}
-          className="bg-secondary border-border text-foreground placeholder:text-muted-foreground resize-none input-focus"
+          className="text-sm bg-secondary border-border text-foreground placeholder:text-muted-foreground resize-none input-focus min-h-[80px] lg:min-h-[100px]"
         />
       </div>
 
       <Button
         type="submit"
         disabled={isLoading || !name.trim() || !description.trim()}
-        className="w-full h-11 bg-primary hover:bg-primary/90 text-primary-foreground font-medium transition-colors disabled:opacity-40"
+        className="w-full h-10 lg:h-11 bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-medium transition-all disabled:opacity-40 active:scale-[0.98]"
       >
         {isLoading ? (
           <>

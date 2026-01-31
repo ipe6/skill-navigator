@@ -5,8 +5,8 @@ interface LogoProps {
 
 export function Logo({ className = "", showText = true }: LogoProps) {
   return (
-    <div className={`flex items-center gap-2.5 ${className}`}>
-      <div className="relative w-8 h-8 flex items-center justify-center">
+    <div className={`flex items-center gap-2 ${className}`}>
+      <div className="relative w-6 h-6 lg:w-7 lg:h-7 flex items-center justify-center">
         {/* Abstract geometric logo mark */}
         <svg
           viewBox="0 0 32 32"
@@ -32,7 +32,7 @@ export function Logo({ className = "", showText = true }: LogoProps) {
         </svg>
       </div>
       {showText && (
-        <span className="font-semibold text-lg tracking-tight text-foreground">
+        <span className="font-semibold text-sm lg:text-base tracking-tight text-foreground">
           AgentForge
         </span>
       )}
