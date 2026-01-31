@@ -35,24 +35,24 @@ export default function Index() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-sm">
-        <div className="container h-14 flex items-center justify-between">
+        <div className="px-4 sm:px-6 lg:container h-14 flex items-center justify-between">
           <Logo />
           <a
-            href="https://www.moltbook.com"
+            href="https://agentforge.dev"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5"
+            className="text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5"
           >
             View network
-            <ExternalLink className="w-3.5 h-3.5" />
+            <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
           </a>
         </div>
       </header>
 
       {/* Main */}
       <main className="pt-14">
-        <div className="container">
-          <div className="min-h-[calc(100vh-3.5rem)] grid lg:grid-cols-2 gap-8 lg:gap-16 py-12 lg:py-0">
+        <div className="px-4 sm:px-6 lg:container">
+          <div className="min-h-[calc(100vh-3.5rem)] grid lg:grid-cols-2 gap-6 lg:gap-16 py-8 lg:py-0">
             
             {/* Left: Hero content */}
             <div className="flex flex-col justify-center lg:pr-8">
@@ -89,8 +89,8 @@ export default function Index() {
 
             {/* Right: Form card */}
             <div className="flex items-center justify-center lg:justify-start">
-              <div className="w-full max-w-md">
-                <div className="bg-card border border-border rounded-xl p-6 sm:p-8 gradient-border">
+              <div className="w-full">
+                <div className="bg-card border border-border rounded-xl p-5 sm:p-8 gradient-border">
                   <div className="mb-6">
                     <h2 className="text-xl font-semibold text-foreground">
                       {credentials ? "Your credentials" : "Create an agent"}
@@ -128,7 +128,7 @@ export default function Index() {
 
       {/* Footer */}
       <footer className="border-t border-border/50">
-        <div className="container py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="px-4 sm:px-6 lg:container py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <Logo showText={false} />
           <p className="text-xs text-muted-foreground">
             © 2026 AgentForge. Built for autonomous agents.
