@@ -49,15 +49,15 @@ export function CredentialCard({ credentials, onReset }: CredentialCardProps) {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* Success indicator */}
       <div className="flex items-center gap-3 pb-4 border-b border-border">
-        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-          <Check className="w-5 h-5 text-primary" />
+        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+          <Check className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
         </div>
-        <div>
-          <p className="font-medium text-foreground">Agent created</p>
-          <p className="text-sm text-muted-foreground">Save your credentials now</p>
+        <div className="min-w-0">
+          <p className="font-medium text-foreground text-sm sm:text-base">Agent created</p>
+          <p className="text-xs sm:text-sm text-muted-foreground">Save your credentials now</p>
         </div>
       </div>
 
@@ -65,49 +65,61 @@ export function CredentialCard({ credentials, onReset }: CredentialCardProps) {
       <div className="space-y-4">
         {items.map((item) => (
           <div key={item.label} className="space-y-1.5">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                {item.label}
-              </span>
+            <span className="text-[10px] sm:text-xs font-medium text-muted-foreground uppercase tracking-wide">
+              {item.label}
+            </span>
+            
+            {/* Mobile: Stack layout */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+              <div className="flex items-center gap-2 min-w-0 flex-1">
+                <code className="flex-1 px-2.5 sm:px-3 py-2 sm:py-2.5 bg-secondary rounded-md text-xs sm:text-sm font-mono text-foreground overflow-hidden">
+                  <span className="block truncate">
+                    {item.masked 
+                      ? `${"•".repeat(8)}${item.value.slice(-6)}` 
+                      : item.value
+                    }
+                  </span>
+                </code>
+                
+                {/* Action buttons - always visible */}
+                <div className="flex items-center gap-1 shrink-0">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => copy(item.value, item.label)}
+                    className="h-8 w-8 sm:h-9 sm:w-9 hover:bg-secondary"
+                  >
+                    {copied === item.label ? (
+                      <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />
+                    ) : (
+                      <Copy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-muted-foreground" />
+                    )}
+                  </Button>
+                  {item.link && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      asChild
+                      className="h-8 w-8 sm:h-9 sm:w-9 hover:bg-secondary"
+                    >
+                      <a href={item.value} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-muted-foreground" />
+                      </a>
+                    </Button>
+                  )}
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <code className="flex-1 px-3 py-2.5 bg-secondary rounded-md text-sm font-mono text-foreground truncate">
-                {item.masked ? `${"•".repeat(12)}${item.value.slice(-8)}` : item.value}
-              </code>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => copy(item.value, item.label)}
-                className="shrink-0 h-9 w-9 hover:bg-secondary"
-              >
-                {copied === item.label ? (
-                  <Check className="w-4 h-4 text-primary" />
-                ) : (
-                  <Copy className="w-4 h-4 text-muted-foreground" />
-                )}
-              </Button>
-              {item.link && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  asChild
-                  className="shrink-0 h-9 w-9 hover:bg-secondary"
-                >
-                  <a href={item.value} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="w-4 h-4 text-muted-foreground" />
-                  </a>
-                </Button>
-              )}
-            </div>
-            <p className="text-xs text-muted-foreground">{item.hint}</p>
+            
+            <p className="text-[10px] sm:text-xs text-muted-foreground">{item.hint}</p>
           </div>
         ))}
       </div>
 
       {/* Next steps */}
-      <div className="p-4 bg-secondary/50 rounded-lg space-y-2">
-        <p className="text-sm font-medium text-foreground">Next steps</p>
-        <ol className="text-sm text-muted-foreground space-y-1 list-decimal list-inside">
+      <div className="p-3 sm:p-4 bg-secondary/50 rounded-lg space-y-2">
+        <p className="text-xs sm:text-sm font-medium text-foreground">Next steps</p>
+        <ol className="text-xs sm:text-sm text-muted-foreground space-y-1 list-decimal list-inside">
           <li>Copy and store API key securely</li>
           <li>Send claim URL to the agent owner</li>
           <li>Owner verifies via social post</li>
@@ -118,9 +130,9 @@ export function CredentialCard({ credentials, onReset }: CredentialCardProps) {
       <Button
         variant="ghost"
         onClick={onReset}
-        className="w-full text-muted-foreground hover:text-foreground"
+        className="w-full h-10 text-xs sm:text-sm text-muted-foreground hover:text-foreground"
       >
-        <RotateCcw className="w-4 h-4 mr-2" />
+        <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-2" />
         Create another
       </Button>
     </div>
