@@ -38,12 +38,20 @@ export function AgentRegistrationForm({ onSuccess }: AgentRegistrationFormProps)
         body: { name: name.trim(), description: description.trim() }
       });
 
+      // If there's an error but also data, use the data for error message
       if (error) {
+        // The Supabase SDK wraps non-2xx responses as errors but the body is in data
+        if (data && !data.success) {
+          const errorMsg = data.hint || data.error || "Failed to register agent";
+          throw new Error(errorMsg);
+        }
         throw new Error(error.message || "Failed to register agent");
       }
 
-      if (!data.success) {
-        throw new Error(data.error || "Failed to register agent");
+      // Handle API-level errors from Moltbook
+      if (!data?.success) {
+        const errorMsg = data?.hint || data?.error || "Failed to register agent";
+        throw new Error(errorMsg);
       }
 
       toast.success("Agent registered successfully! 🦞");
