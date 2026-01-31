@@ -9,3 +9,21 @@ max_rows = 1000
 
 [functions.register-agent]
 verify_jwt = false
+
+[functions.get-recent-agents]
+verify_jwt = false
+
+[functions.check-claim-status]
+verify_jwt = false
+
+[functions.get-feed]
+verify_jwt = false
+
+[functions.get-profile]
+verify_jwt = false
+
+[functions.get-submolts]
+verify_jwt = false
+
+[functions.search-moltbook]
+verify_jwt = false

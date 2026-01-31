@@ -7,8 +7,9 @@ import { SemanticSearch } from "@/components/SemanticSearch";
 import { FeedViewer } from "@/components/FeedViewer";
 import { ProfileViewer } from "@/components/ProfileViewer";
 import { SubmoltBrowser } from "@/components/SubmoltBrowser";
+import { RecentAgents } from "@/components/RecentAgents";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ExternalLink, Bot, Shield, Zap, Sparkles, MessageSquare, Users, TrendingUp, Plus, CheckCircle, Search, Rss, User, Hash } from "lucide-react";
+import { ExternalLink, Bot, Shield, Zap, Sparkles, MessageSquare, Users, TrendingUp, Plus, CheckCircle, Search, Rss, User, Hash, Activity } from "lucide-react";
 
 interface AgentCredentials {
   api_key: string;
@@ -30,6 +31,7 @@ const capabilities = [
 
 const tabs = [
   { value: "register", label: "Register", icon: Plus },
+  { value: "recent", label: "Recent", icon: Activity },
   { value: "status", label: "Status", icon: CheckCircle },
   { value: "profile", label: "Profile", icon: User },
   { value: "feed", label: "Feed", icon: Rss },
@@ -98,7 +100,7 @@ export default function Index() {
           {/* Mobile Tabs */}
           <div className="flex-1 px-4 pb-6">
             <Tabs defaultValue="register" className="w-full">
-              <TabsList className="w-full grid grid-cols-6 h-auto p-1 bg-secondary/50 mb-4">
+              <TabsList className="w-full grid grid-cols-7 h-auto p-1 bg-secondary/50 mb-4">
                 {tabs.map((tab) => (
                   <TabsTrigger
                     key={tab.value}
@@ -126,6 +128,14 @@ export default function Index() {
                   ) : (
                     <CreateAgentForm onSuccess={setCredentials} />
                   )}
+                </TabsContent>
+
+                <TabsContent value="recent" className="mt-0">
+                  <div className="mb-4">
+                    <h2 className="text-base font-semibold text-foreground">Recent Agents</h2>
+                    <p className="text-xs text-muted-foreground mt-0.5">Newly registered agents on Moltbook</p>
+                  </div>
+                  <RecentAgents />
                 </TabsContent>
 
                 <TabsContent value="status" className="mt-0">
@@ -225,7 +235,7 @@ export default function Index() {
             {/* Right: Tabs */}
             <div className="py-12">
               <Tabs defaultValue="register" className="w-full">
-                <TabsList className="w-full grid grid-cols-6 h-auto p-1 bg-secondary/50 mb-4">
+                <TabsList className="w-full grid grid-cols-7 h-auto p-1 bg-secondary/50 mb-4">
                   {tabs.map((tab) => (
                     <TabsTrigger
                       key={tab.value}
@@ -253,6 +263,14 @@ export default function Index() {
                     ) : (
                       <CreateAgentForm onSuccess={setCredentials} />
                     )}
+                  </TabsContent>
+
+                  <TabsContent value="recent" className="mt-0">
+                    <div className="mb-8">
+                      <h2 className="text-xl font-semibold text-foreground">Recent Agents</h2>
+                      <p className="text-sm text-muted-foreground mt-1">Newly registered agents on Moltbook network</p>
+                    </div>
+                    <RecentAgents />
                   </TabsContent>
 
                   <TabsContent value="status" className="mt-0">
