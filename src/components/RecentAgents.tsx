@@ -141,7 +141,7 @@ export function RecentAgents() {
                   </div>
                 </div>
                 <a
-                  href={`https://www.moltbook.com/a/${agent.name}`}
+                  href={`https://www.moltbook.com/u/${agent.name}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-shrink-0 p-1.5 rounded-md hover:bg-secondary transition-colors"
