@@ -9,8 +9,9 @@ import { ProfileViewer } from "@/components/ProfileViewer";
 import { SubmoltBrowser } from "@/components/SubmoltBrowser";
 import { RecentAgents } from "@/components/RecentAgents";
 import { RecentAgentsCompact } from "@/components/RecentAgentsCompact";
+import { ClawnchLauncher } from "@/components/ClawnchLauncher";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ExternalLink, Bot, Shield, Zap, Sparkles, MessageSquare, Users, TrendingUp, Plus, CheckCircle, Search, Rss, User, Hash, Activity } from "lucide-react";
+import { ExternalLink, Bot, Shield, Zap, Sparkles, MessageSquare, Users, TrendingUp, Plus, CheckCircle, Search, Rss, User, Hash, Activity, Rocket } from "lucide-react";
 
 interface AgentCredentials {
   api_key: string;
@@ -32,6 +33,7 @@ const capabilities = [
 
 const tabs = [
   { value: "register", label: "Register", icon: Plus },
+  { value: "clawnch", label: "Clawnch", icon: Rocket },
   { value: "status", label: "Status", icon: CheckCircle },
   { value: "profile", label: "Profile", icon: User },
   { value: "feed", label: "Feed", icon: Rss },
@@ -100,7 +102,7 @@ export default function Index() {
           {/* Mobile Tabs */}
           <div className="flex-1 px-4 pb-6">
             <Tabs defaultValue="register" className="w-full">
-              <TabsList className="w-full grid grid-cols-6 h-auto p-1 bg-secondary/50 mb-4">
+              <TabsList className="w-full grid grid-cols-7 h-auto p-1 bg-secondary/50 mb-4">
                 {tabs.map((tab) => (
                   <TabsTrigger
                     key={tab.value}
@@ -140,6 +142,14 @@ export default function Index() {
                     </div>
                     <RecentAgents />
                   </div>
+                </TabsContent>
+
+                <TabsContent value="clawnch" className="mt-0">
+                  <div className="mb-4">
+                    <h2 className="text-base font-semibold text-foreground">Launch Memecoin</h2>
+                    <p className="text-xs text-muted-foreground mt-0.5">Deploy tokens on Base via Clawnch</p>
+                  </div>
+                  <ClawnchLauncher />
                 </TabsContent>
 
                 <TabsContent value="status" className="mt-0">
@@ -238,7 +248,7 @@ export default function Index() {
             {/* Right: Tabs - Compact */}
             <div>
               <Tabs defaultValue="register" className="w-full">
-                <TabsList className="w-full grid grid-cols-6 h-auto p-1 bg-secondary/50 mb-4">
+                <TabsList className="w-full grid grid-cols-7 h-auto p-1 bg-secondary/50 mb-4">
                   {tabs.map((tab) => (
                     <TabsTrigger
                       key={tab.value}
@@ -266,6 +276,14 @@ export default function Index() {
                     ) : (
                       <CreateAgentForm onSuccess={setCredentials} />
                     )}
+                  </TabsContent>
+
+                  <TabsContent value="clawnch" className="mt-0">
+                    <div className="mb-6">
+                      <h2 className="text-xl font-semibold text-foreground">Launch Memecoin</h2>
+                      <p className="text-sm text-muted-foreground mt-1">Deploy tokens on Base via Clawnch - earn 80% of trading fees</p>
+                    </div>
+                    <ClawnchLauncher />
                   </TabsContent>
 
                   <TabsContent value="status" className="mt-0">
