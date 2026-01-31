@@ -68,9 +68,12 @@ serve(async (req) => {
         JSON.stringify({ 
           success: false, 
           error: postData.error || "Failed to create Moltbook post",
-          details: postData
+          details: postData,
+          http_status: postResponse.status,
+          phase: "moltbook_post"
         }),
-        { status: postResponse.status, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        // Return 200 so frontend can display the error payload (avoid generic non-2xx invoke error)
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
@@ -107,10 +110,14 @@ serve(async (req) => {
           success: false, 
           error: launchData.error || "Failed to launch token",
           errors: launchData.errors,
+          http_status: launchResponse.status,
+          phase: "clawnch_launch",
           post_id: postId,
           post_url: `https://www.moltbook.com/post/${postId}`
         }),
-        { status: launchResponse.status, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        // IMPORTANT: Return 200 so the client can read the error payload.
+        // Supabase client treats non-2xx as an invocation error and hides useful details.
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
