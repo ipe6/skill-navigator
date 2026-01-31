@@ -57,7 +57,7 @@ export default {
         ember: "hsl(var(--ember))",
         charcoal: "hsl(var(--charcoal))",
         slate: "hsl(var(--slate))",
-        cream: "hsl(var(--cream))",
+        success: "hsl(var(--success))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
