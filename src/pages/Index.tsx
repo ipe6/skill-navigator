@@ -31,7 +31,6 @@ const capabilities = [
 
 const tabs = [
   { value: "register", label: "Register", icon: Plus },
-  { value: "recent", label: "Recent", icon: Activity },
   { value: "status", label: "Status", icon: CheckCircle },
   { value: "profile", label: "Profile", icon: User },
   { value: "feed", label: "Feed", icon: Rss },
@@ -100,7 +99,7 @@ export default function Index() {
           {/* Mobile Tabs */}
           <div className="flex-1 px-4 pb-6">
             <Tabs defaultValue="register" className="w-full">
-              <TabsList className="w-full grid grid-cols-7 h-auto p-1 bg-secondary/50 mb-4">
+              <TabsList className="w-full grid grid-cols-6 h-auto p-1 bg-secondary/50 mb-4">
                 {tabs.map((tab) => (
                   <TabsTrigger
                     key={tab.value}
@@ -128,14 +127,18 @@ export default function Index() {
                   ) : (
                     <CreateAgentForm onSuccess={setCredentials} />
                   )}
-                </TabsContent>
-
-                <TabsContent value="recent" className="mt-0">
-                  <div className="mb-4">
-                    <h2 className="text-base font-semibold text-foreground">Recent Agents</h2>
-                    <p className="text-xs text-muted-foreground mt-0.5">Newly registered agents on Moltbook</p>
+                  
+                  {/* Recent Agents Section */}
+                  <div className="mt-6 pt-6 border-t border-border/50">
+                    <div className="mb-4">
+                      <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                        <Activity className="w-4 h-4 text-primary" />
+                        Recent Agents
+                      </h3>
+                      <p className="text-xs text-muted-foreground mt-0.5">Newly registered on Moltbook</p>
+                    </div>
+                    <RecentAgents />
                   </div>
-                  <RecentAgents />
                 </TabsContent>
 
                 <TabsContent value="status" className="mt-0">
@@ -235,7 +238,7 @@ export default function Index() {
             {/* Right: Tabs */}
             <div className="py-12">
               <Tabs defaultValue="register" className="w-full">
-                <TabsList className="w-full grid grid-cols-7 h-auto p-1 bg-secondary/50 mb-4">
+                <TabsList className="w-full grid grid-cols-6 h-auto p-1 bg-secondary/50 mb-4">
                   {tabs.map((tab) => (
                     <TabsTrigger
                       key={tab.value}
@@ -263,14 +266,18 @@ export default function Index() {
                     ) : (
                       <CreateAgentForm onSuccess={setCredentials} />
                     )}
-                  </TabsContent>
-
-                  <TabsContent value="recent" className="mt-0">
-                    <div className="mb-8">
-                      <h2 className="text-xl font-semibold text-foreground">Recent Agents</h2>
-                      <p className="text-sm text-muted-foreground mt-1">Newly registered agents on Moltbook network</p>
+                    
+                    {/* Recent Agents Section */}
+                    <div className="mt-8 pt-8 border-t border-border/50">
+                      <div className="mb-6">
+                        <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                          <Activity className="w-5 h-5 text-primary" />
+                          Recent Agents
+                        </h3>
+                        <p className="text-sm text-muted-foreground mt-1">Newly registered on Moltbook network</p>
+                      </div>
+                      <RecentAgents />
                     </div>
-                    <RecentAgents />
                   </TabsContent>
 
                   <TabsContent value="status" className="mt-0">
